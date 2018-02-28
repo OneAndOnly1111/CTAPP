@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="25px" viewBox="0 0 26 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>音量</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M21,200.998991 L21,198.935991 C23.891,198.074991 26,195.398991 26,192.228991 C26,189.059991 23.891,186.383991 21,185.522991 L21,183.459991 C25.007,184.370991 28,187.946991 28,192.228991 C28,196.511991 25.007,200.088991 21,200.998991 L21,200.998991 Z M23.5,192.228991 C23.5,193.994991 22.48,195.518991 21,196.256991 L21,188.201991 C22.48,188.939991 23.5,190.463991 23.5,192.228991 L23.5,192.228991 Z M10,195.228991 L10,189.228991 L14,189.228991 L19,184.228991 L19,200.228991 L14,195.228991 L10,195.228991 Z" id="path-1"></path>
+        <filter x="-38.9%" y="-28.5%" width="177.8%" height="179.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.746572066   0 0 0 0 0.746572066   0 0 0 0 0.746572066  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="CMS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-6.000000, -261.000000)">
+        <g id="视频" transform="translate(0.000000, 79.000000)">
+            <g id="音量">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#999999" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

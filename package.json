@@ -1,0 +1,35 @@
+{
+  "name": "dapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --hot --inline --color",
+    "build": "webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
+    "babel-preset-es2015": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.18",
+    "css-loader": "^0.28.10",
+    "html-webpack-plugin": "^2.30.1",
+    "image-webpack-loader": "^4.1.0",
+    "jquery": "^3.3.1",
+    "less": "^3.0.1",
+    "less-loader": "^4.0.6",
+    "moment": "^2.20.1",
+    "postcss-loader": "^2.1.1",
+    "style-loader": "^0.20.2",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.5.5",
+    "webpack-cli": "^2.0.9",
+    "webpack-dev-server": "^2.9.7"
+  }
+}
