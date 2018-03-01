@@ -1,22 +1,20 @@
 .container{
   margin: 0 auto;
   width: 100%;
-  height: 100%;
-  background: #DADADA;
 }
 .hot-section{
-  /*width: 100%;*/
-  padding-top: 0.2rem;
+  margin-top: 0.15rem;
+  background: #fff;
 }
 .hot-section .video-content{
   position: relative;
-  margin-bottom: -0.07rem;
+  margin-bottom: -0.06rem;
   /*width: 100%;*/
 }
 .video-content> video {
   width: 100%;
   height: 2.11rem;
-  object-fit:fill;
+  object-fit:cover; /*fill 自动填充*/
 }
 .video-content .video-controls{
   position: absolute;
@@ -24,6 +22,7 @@
   width: 100%;
   padding: 0 0.1rem;
   overflow: hidden;
+  /*display: none;*/
 }
 .video-controls .controls-volume{
   /*color: #999;*/
@@ -40,29 +39,56 @@
 
 .video-info{
   background: #fff;
-  padding:0 0.1rem;
+  padding:0 0.1rem 0.1rem 0.1rem;
 }
 .video-info .info-title{
   font-size: 0.15rem;
+  margin: 0.05rem 0px;
   color: #333;
-
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* autoprefixer: off */
+  -webkit-box-orient: vertical;
+  /* autoprefixer: on */
 }
 .video-info .info-other{
-  font-size: 0.09rem !important;
+  font-size: 0.12rem;
   color: #666;
-  padding: 0.1rem 0;
+  /*white-space: nowrap;*/
 }
 .video-info .info-name{
+  max-width: 1.05rem;
   display: inline-block;
-  margin-right: 0.1rem;
+  vertical-align: middle;
+  margin-right: 0.05rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .video-info .info-playCounts{
-
+  display: inline-block;
+  vertical-align: middle;
 }
 .video-info .info-publishTime{
   float: right;
+  vertical-align: middle;
 }
-video::-webkit-media-controls-fullscreen-button {
+
+video::-internal-media-controls-download-button {
+    display:none;
+}
+
+video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+}
+
+video::-webkit-media-controls-panel {
+    width: calc(100% + 30px); 
+}
+
+/*video::-webkit-media-controls-fullscreen-button {
    display: none;
 }
 
@@ -75,4 +101,4 @@ video::-webkit-media-controls-timeline {
 
 video::-webkit-media-controls-volume-slider {
   display: none;
-}
+}*/

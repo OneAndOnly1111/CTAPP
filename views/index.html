@@ -17,12 +17,13 @@
   <meta name="format-detection" content="telephone=no">
 
   <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link href="http://vjs.zencdn.net/6.6.3/video-js.css" rel="stylesheet">
   <!-- <link rel="stylesheet" href="../styles/reset.css"> -->
   <!-- <link rel="stylesheet" href="../styles/index.css"> -->
 </head>
 <body>
-  <div class="container">
-    <section class="hot-section">
+  <div class="container" id="hot-container">
+    <!-- <section class="hot-section">
       <div class="video-content">
         <video src="../assets/paino.mp4" poster="../assets/poster.png"></video>
         <div class="video-controls">
@@ -55,7 +56,20 @@
           <span class="info-publishTime">1分钟以内</span>
         </p>
       </div>
-    </section>
+    </section> -->
+    <!-- <div class="video-content">
+      <video id="my-video" class="video-js" preload="auto" poster="../assets/poster.png" data-setup="{}">
+        <source src="../assets/paino.mp4" type='video/mp4'>
+        <source src="../assets/paino.mp4" type='video/mp4'>
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a web browser that
+          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+      </video>
+    </div> -->
+    <div id="version" style="border:2px solid black; background:yellow">app version info</div>
+    <div id="result" style="border:2px solid red; color:red;">未触发事件！</div>
+    <script src="http://vjs.zencdn.net/6.6.3/video.js"></script>
   </div>
 </body>
 </html>

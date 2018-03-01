@@ -6,6 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: {
     main: ['./js/main.js'],
+    index: ['./js/index.js'],
     vendor: ['jquery', 'moment']
   },
   output: {
@@ -116,7 +117,7 @@ module.exports = {
       filename: 'index.html',
       inject: 'body',
       title: '首页',
-      chunks: ['main', 'vendor']
+      chunks: ['main', 'vendor', 'index']
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './views/about.html'),
