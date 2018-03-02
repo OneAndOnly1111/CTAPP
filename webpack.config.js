@@ -5,9 +5,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
+    vendor: ['jquery'],
     main: ['./js/main.js'],
     index: ['./js/index.js'],
-    vendor: ['jquery', 'moment']
+    fullScreen: ['./js/fullScreen.js'],
   },
   output: {
     filename: 'js/[name].js',
@@ -117,15 +118,23 @@ module.exports = {
       filename: 'index.html',
       inject: 'body',
       title: '首页',
-      chunks: ['main', 'vendor', 'index']
+      chunks: ['vendor', 'main', 'index']
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './views/about.html'),
       filename: 'about.html',
       inject: 'body',
       title: '关于',
-      excludeChunks: ['main'],
-      chunks: ['vendor']
+      // excludeChunks: ['index'],
+      chunks: ['vendor', 'main']
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './views/fullScreen.html'),
+      filename: 'fullScreen.html',
+      inject: 'body',
+      title: '全屏',
+      // excludeChunks: ['index'],
+      chunks: ['vendor', 'main', 'fullScreen']
     }),
     new webpack.optimize.CommonsChunkPlugin({ //提取公共模块
       name: 'vendor'
