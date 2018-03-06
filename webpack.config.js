@@ -25,11 +25,14 @@ module.exports = {
     hot: true,
     inline: true,
     progress: true,
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://192.168.1.61:10101/'
-    //   },
-    // }
+    proxy: {
+      '/video': {
+        target: 'http://192.168.124.24:8000/'
+      },
+      '/static': {
+        target: 'http://192.168.124.24:8000/'
+      },
+    }
   },
   module: {
     rules: [{

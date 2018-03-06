@@ -1,49 +1,52 @@
-[{
-  "videoPoster": "assets/poster.png",
-  "videoSrc": "assets/paino.mp4",
-  "videoName": "权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏",
-  "videoTime": "3.30",
-  "creater": "钢琴上的王子",
-  "publishTime": "2018-03-01 09:49",
-  "playCount": "25"
-}, {
-  "videoPoster": "assets/poster.png",
-  "videoSrc": "assets/youname.mp4",
-  "videoName": "你的名字",
-  "videoTime": "2.30",
-  "creater": "周杰伦jayzhou",
-  "publishTime": "2017-6-01 09:49",
-  "playCount": "10"
-}, {
-  "videoPoster": "assets/poster.png",
-  "videoSrc": "assets/hole.mp4",
-  "videoName": "黑洞",
-  "videoTime": "2.45",
-  "creater": "陈奕迅",
-  "publishTime": "2018-03-02 15:10",
-  "playCount": "8"
-}, {
-  "videoPoster": "assets/poster.png",
-  "videoSrc": "assets/paino.mp4",
-  "videoName": "吸血鬼日记",
-  "videoTime": "2.30",
-  "creater": "进击的巨人进击的巨人进击的巨人进击的巨人",
-  "publishTime": "2017-6-01 09:49",
-  "playCount": "10"
-}, {
-  "videoPoster": "assets/poster.png",
-  "videoSrc": "assets/hole.mp4",
-  "videoName": "权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏",
-  "videoTime": "3.30",
-  "creater": "lucy",
-  "publishTime": "2018-03-02 09:49",
-  "playCount": "25"
-}, {
-  "videoPoster": "assets/poster.png",
-  "videoSrc": "assets/youname.mp4",
-  "videoName": "你的名字",
-  "videoTime": "1.25",
-  "creater": "周杰伦周杰伦周杰伦周杰伦",
-  "publishTime": "2017-6-01 09:49",
-  "playCount": "10"
-}]
+{
+    "noMore": false,
+    "data": [{
+        "videoPoster": "assets/poster.png",
+        "videoSrc": "assets/paino.mp4",
+        "videoName": "权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏",
+        "videoTime": "3.30",
+        "creater": "钢琴上的王子",
+        "publishTime": "2018-03-01 09:49",
+        "playCount": "25"
+    }, {
+        "videoPoster": "assets/poster.png",
+        "videoSrc": "assets/youname.mp4",
+        "videoName": "你的名字",
+        "videoTime": "2.30",
+        "creater": "周杰伦jayzhou",
+        "publishTime": "2017-6-01 09:49",
+        "playCount": "10"
+    }, {
+        "videoPoster": "assets/poster.png",
+        "videoSrc": "assets/hole.mp4",
+        "videoName": "黑洞",
+        "videoTime": "2.45",
+        "creater": "陈奕迅",
+        "publishTime": "2018-03-02 15:10",
+        "playCount": "8"
+    }, {
+        "videoPoster": "assets/poster.png",
+        "videoSrc": "assets/paino.mp4",
+        "videoName": "吸血鬼日记",
+        "videoTime": "2.30",
+        "creater": "进击的巨人进击的巨人进击的巨人进击的巨人",
+        "publishTime": "2017-6-01 09:49",
+        "playCount": "10"
+    }, {
+        "videoPoster": "assets/poster.png",
+        "videoSrc": "assets/hole.mp4",
+        "videoName": "权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏权利的游戏",
+        "videoTime": "3.30",
+        "creater": "lucy",
+        "publishTime": "2018-03-02 09:49",
+        "playCount": "25"
+    }, {
+        "videoPoster": "assets/poster.png",
+        "videoSrc": "assets/youname.mp4",
+        "videoName": "你的名字",
+        "videoTime": "1.25",
+        "creater": "周杰伦周杰伦周杰伦周杰伦",
+        "publishTime": "2017-6-01 09:49",
+        "playCount": "10"
+    }]
+}

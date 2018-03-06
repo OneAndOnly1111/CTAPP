@@ -1,6 +1,21 @@
 .container{
   margin: 0 auto;
   width: 100%;
+  /*margin-bottom: 0.6rem;*/
+}
+.ajax_loading{
+  width:100%;
+  line-height: 0.6rem;
+  text-align:center;
+  font-size:0.14rem;
+  background:#DADADA;
+  color: #666;
+  display:none;
+  /*position:fixed;*/
+  /*bottom:0;*/
+}
+.loading_gif{
+  margin-right: 0.1rem;
 }
 .hot-section{
   margin-top: 0.15rem;
@@ -24,7 +39,7 @@
   overflow: hidden;
   /*display: none;*/
 }
-.video-controls .controls-volume{
+.video-controls .volume_icon{
   /*color: #999;*/
   /*width: 0.18rem;*/
   /*height: 0.18rem;*/
@@ -34,7 +49,7 @@
   color: #999;
   font-size: 0.13rem;
   letter-spacing: -0.48px;
-  text-shadow: 0 2px 4px ;
+  /*text-shadow: 0 2px 4px ;*/
 }
 
 .video-info{

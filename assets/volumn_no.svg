@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="25px" viewBox="0 0 26 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>静音</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M11,17.9989915 L11,15.9359915 C13.891,15.0749915 16,12.3989915 16,9.22899146 C16,6.05999146 13.891,3.38399146 11,2.52299146 L11,0.459991455 C15.007,1.37099146 18,4.94699146 18,9.22899146 C18,13.5119915 15.007,17.0889915 11,17.9989915 L11,17.9989915 Z M13.5,9.22899146 C13.5,10.9949915 12.48,12.5189915 11,13.2569915 L11,5.20199146 C12.48,5.93999146 13.5,7.46399146 13.5,9.22899146 L13.5,9.22899146 Z M0,12.2289915 L0,6.22899146 L4,6.22899146 L9,1.22899146 L9,17.2289915 L4,12.2289915 L0,12.2289915 Z" id="path-1"></path>
+        <filter x="-38.9%" y="-28.5%" width="177.8%" height="179.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.746572066   0 0 0 0 0.746572066   0 0 0 0 0.746572066  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="CMS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-6.000000, -261.000000)">
+        <g id="视频" transform="translate(0.000000, 79.000000)">
+            <g id="静音" transform="translate(10.000000, 183.000000)">
+                <path d="M19,2 L3,17" id="Line-2" stroke="#979797" stroke-width="2" stroke-linecap="square"></path>
+                <g id="音量">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#999999" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
