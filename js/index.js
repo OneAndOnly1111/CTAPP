@@ -1,9 +1,11 @@
 import $ from "jquery";
 import moment from "moment";
-import MeScroll from "mescroll.js"
-import MiniRefreshTools from 'minirefresh';
-import '../node_modules/minirefresh/dist/debug/minirefresh.css'
+// import MeScroll from "mescroll.js"
+// import MiniRefreshTools from 'minirefresh';
+// import '../node_modules/minirefresh/dist/debug/minirefresh.css'
 moment.locale('zh-cn');
+// const json = require("../mock.json");
+import '../mock.json';
 
 var lastIndex;
 var topValue = 0;
@@ -13,8 +15,8 @@ var scrollDirection;
 //获取视频
 function queryVideoList(last) {
   $.ajax({
-    url: '../mock.json',
-    // url: '/video/get_video_list?last=' + last,
+    // url: "../mock.json",
+    url: '/video/get_video_list?last=' + last,
     beforeSend: function() {
       $('.ajax_loading').html('<img class="loading_gif" src="../assets/loading.gif" alt="">加载中...').show(); //显示加载时候的提示
     },

@@ -2,18 +2,19 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
     vendor: ['jquery'],
     main: ['./js/main.js'],
     index: ['./js/index.js'],
-    fullScreen: ['./js/fullScreen.js'],
   },
   output: {
     filename: 'js/[name].js',
     path: path.resolve(__dirname, 'dist'),
     // publicPath: '/',
+    // publicPath: 'D:/Workspace/CTAPP/app/dist/',
   },
   devServer: {
     // contentBase: path.join(__dirname, 'dist'), //告诉服务器从哪里提供内容。
@@ -27,10 +28,10 @@ module.exports = {
     progress: true,
     proxy: {
       '/video': {
-        target: 'http://192.168.124.24:8000/'
+        target: 'http://192.168.2.39:8000/'
       },
       '/static': {
-        target: 'http://192.168.124.24:8000/'
+        target: 'http://192.168.2.39:8000/'
       },
     }
   },
@@ -42,6 +43,11 @@ module.exports = {
       }],
       // include: path.resolve(__dirname, 'src'),
       exclude: path.resolve(__dirname, 'node_modules'), //绝对路径 exclude代表不去解析这个目录下的.js文件
+    }, {
+      test: /\.json$/,
+      use: [{
+        loader: 'json-loader',
+      }],
     }, {
       test: /\.css$/,
       use: [
@@ -131,17 +137,14 @@ module.exports = {
       // excludeChunks: ['index'],
       chunks: ['vendor', 'main']
     }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './views/fullScreen.html'),
-      filename: 'fullScreen.html',
-      inject: 'body',
-      title: '全屏',
-      // excludeChunks: ['index'],
-      chunks: ['vendor', 'main', 'fullScreen']
-    }),
     new webpack.optimize.CommonsChunkPlugin({ //提取公共模块
       name: 'vendor'
     }),
     new CleanWebpackPlugin(['dist']), //打包之前删除上一次的打包文件
+    new CopyWebpackPlugin([{
+      context: "./",
+      from: 'mock.json',
+      to: path.resolve(__dirname, './dist/mock.json')
+    }]),
   ]
 }
