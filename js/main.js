@@ -6,9 +6,14 @@ import "../styles/index.css";
     resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
     recalc = function() {
       var clientWidth = docEl.clientWidth;
+      console.log("clientWidth", clientWidth)
       if (!clientWidth) return;
       if (clientWidth) {
-        docEl.style.fontSize = clientWidth / 3.75 + 'px';
+        if (clientWidth > 1024) {
+          docEl.style.fontSize = 273 + 'px';
+        } else {
+          docEl.style.fontSize = clientWidth / 3.75 + 'px';
+        }
       }
     };
   if (!doc.addEventListener) return;

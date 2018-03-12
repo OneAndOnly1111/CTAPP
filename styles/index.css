@@ -1,6 +1,7 @@
 .container{
   margin: 0 auto;
-  width: 100%;
+  /*width: 100%;*/
+  max-width: 1024px;
   /*margin-bottom: 0.6rem;*/
 }
 .ajax_loading{
@@ -20,6 +21,7 @@
 .hot-section{
   margin-top: 0.15rem;
   background: #fff;
+  overflow: hidden;
 }
 .hot-section .video-content{
   position: relative;

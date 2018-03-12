@@ -19,10 +19,23 @@
   <!-- <link href="http://vjs.zencdn.net/6.6.3/video-js.css" rel="stylesheet"> -->
   <!-- <link rel="stylesheet" href="../styles/reset.css"> -->
   <!-- <link rel="stylesheet" href="../styles/index.css"> -->
+  <style>
+    #sd,#ud{margin-top: 0;width: 100%;}
+    #sd1,#sd2,#ud1,#ud2{width: 100%;height: 70px;background: #e9f4f7;display: none;}
+    #sd1,#ud2{height: 20px;}
+    #sd1>p,#sd2>p,#ud1>p,#ud2>p{margin: 20px auto;padding-top:8px;text-align:center;font-size: 14px;color: #37bbf5;}
+  </style>
 </head>
 <body>
+  <div id="sd">
+    <div id="sd1">
+        <p>松开后刷新最新回复</p>
+    </div>
+    <div id="sd2">
+        <p><img src="/images/loading.gif" alt="玩命加载中.."/></p>
+    </div>
+  </div>
   <div class="container" id="hot-container">
-
   </div>
   <div class='ajax_loading'></div>
 </body>
@@ -33,7 +46,7 @@
       <div class="video-content">
         <video src="../assets/paino.mp4" poster="../assets/poster.png"></video>
         <div class="video-controls">
-          <img class="controls-volume" src="../assets/volume.svg" alt="">
+          <img class="volume_icon" src="../assets/volume.svg" alt="">
           <span class="controls-time">2.30'</span>
         </div>
       </div>
@@ -50,7 +63,7 @@
       <div class="video-content">
         <video src="../assets/paino.mp4" poster="../assets/poster.png"></video>
         <div class="video-controls">
-          <img class="controls-volume" src="../assets/volume.svg" alt="">
+          <img class="volume_icon" src="../assets/volume.svg" alt="">
           <span class="controls-time">2.30'</span>
         </div>
       </div>
@@ -67,7 +80,7 @@
       <div class="video-content">
         <video src="../assets/paino.mp4" poster="../assets/poster.png"></video>
         <div class="video-controls">
-          <img class="controls-volume" src="../assets/volume.svg" alt="">
+          <img class="volume_icon" src="../assets/volume.svg" alt="">
           <span class="controls-time">2.30'</span>
         </div>
       </div>

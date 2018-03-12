@@ -4,8 +4,6 @@ import moment from "moment";
 // import MiniRefreshTools from 'minirefresh';
 // import '../node_modules/minirefresh/dist/debug/minirefresh.css'
 moment.locale('zh-cn');
-// const json = require("../mock.json");
-import '../mock.json';
 
 var lastIndex;
 var topValue = 0;
@@ -24,7 +22,7 @@ function queryVideoList(last) {
       if (res.noMore) {
         res.data.map(item => {
           item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
-          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-fullSrc="http://cloudtropy.com" shortUrl=' + item.videoSrc + ' src=' + item.videoSrc + ' poster=' + item.videoPoster + '></video><div class="video-controls"><img class="volume_icon" src="../assets/volume.svg" alt=""><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
+          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
         });
         $("video.video")[0].play();
         $('.ajax_loading').text("没有更多数据了...");
@@ -32,12 +30,11 @@ function queryVideoList(last) {
         $('.ajax_loading').hide() //请求成功,隐藏加载提示
         res.data.map(item => {
           item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
-          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-fullSrc="http://cloudtropy.com" shortUrl=' + item.videoSrc + ' src=' + item.videoSrc + ' poster=' + item.videoPoster + '></video><div class="video-controls"><img class="volume_icon" src="../assets/volume.svg" alt=""><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
+          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
         });
         $("video.video")[0].play();
       }
       res.data.length ? lastIndex = queryMinIndex(res.data) : null;
-      console.log("lastIndex", lastIndex)
     }
   });
 }
@@ -55,78 +52,160 @@ function getCenterVideo() {
   let visibleVideo = [];
   for (var i = 0; i < $("video.video").length; i++) {
     $("video.video")[i].pause();
-    // $("video.video")[i].src = "";
-    // $("video.video")[i].load();
     let rect = $("video.video")[i].getBoundingClientRect();
     if (rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth) {
-      console.log("video--center--rect", rect);
       visibleVideo.push($("video.video")[i]);
     }
   }
   console.log("visibleVideo", visibleVideo)
   if (visibleVideo.length) {
     if (visibleVideo.length == 1) {
-      // visibleVideo[0].src = $(visibleVideo[0]).attr("shortUrl");
       visibleVideo[0].play();
     } else {
       if (scrollDirection == 'top') {
-        // visibleVideo[0].src = $(visibleVideo[0]).attr("shortUrl");
         visibleVideo[0].play();
       } else if (scrollDirection == 'bottom') {
-        // visibleVideo[visibleVideo.length - 1].src = $(visibleVideo[visibleVideo.length - 1]).attr("shortUrl");
         visibleVideo[visibleVideo.length - 1].play();
       }
     }
   }
 }
 
-//计算到顶部的距离
-function calculateTop() {
-  // 判断此刻到顶部的距离是否和1秒前的距离相等
-  if (document.documentElement.scrollTop == topValue) {
-    // alert("滚动停止!");
-    console.log("滚动停止", document.documentElement.scrollTop, topValue)
-    clearInterval(interval);
-    interval = null;
-    getCenterVideo();
-    /*
-    for (var i = 0; i < $("video.video").length; i++) {
-      // console.log("video-item", $("video.video")[i].getBoundingClientRect().top);
-      let rect = $("video.video")[i].getBoundingClientRect();
-      console.log("rect", rect, window.innerHeight, window.innerHeight * 0.5);
-      let top = $("video.video")[i].getBoundingClientRect().top;
-      let bottom = $("video.video")[i].getBoundingClientRect().bottom;
-      let innerHeight = window.innerHeight * 0.5;
-      // let innerHeight = window.innerHeight / 2 + 100;
-      // let minHeight = window.innerHeight / 2 + 100;
-      // console.log("top", "innerHeight", top, innerHeight);
-
-      if (rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth) {
-        $("video.video")[i].play();
-        console.log("video--top---", top, "bottom", bottom, "innerHeight", innerHeight, $("video.video")[i].offsetTop)
-      } else {
-        $("video.video")[i].pause();
-      }
-      // if (bottom > innerHeight && top < innerHeight) {
-      //   console.log("video--top---", top, "bottom", bottom, "innerHeight", innerHeight, $("video.video")[i].offsetTop)
-      //   $("video.video")[i].play();
-      // } else {
-      //   $("video.video")[i].pause();
-      // }
+// 获取最靠近中心的video元素，并播放
+function calculateCenter() {
+  var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+  const visibleArr = [];
+  const inVisibleArr = [];
+  for (var i = 0; i < $("video.video").length; i++) {
+    $("video.video")[i].pause();
+    const rect = $("video.video")[i].getBoundingClientRect();
+    if (rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth) {
+      visibleArr.push($("video.video")[i]);
     }
-    */
+  }
+  console.log("visibleArr", visibleArr);
+  if (visibleArr.length) {
+    if (visibleArr.length == 1) {
+      visibleArr[0].play();
+    } else {
+      visibleArr.sort((ele1, ele2) => {
+        const position1 = ele1.getBoundingClientRect();
+        const position2 = ele2.getBoundingClientRect();
+        const innerHeight = window.innerHeight / 2;
+        const distancefromCenter1 = Math.abs((position1.top + position1.height) - innerHeight);
+        const distancefromCenter2 = Math.abs((position2.top + position2.height) - innerHeight);
+        console.log("position1", position1, position1.top + position1.height, "innerHeight", distancefromCenter1, Math.abs((position1.top + position1.height) - innerHeight));
+        console.log("position2", position2, position2.top + position2.height, "innerHeight", distancefromCenter2, Math.abs((position2.top + position2.height) - innerHeight));
+        if (distancefromCenter1 < distancefromCenter2) {
+          ele1.play();
+        } else if (distancefromCenter1 > distancefromCenter2) {
+          ele2.play();
+        }
+      });
+    }
   }
 }
 
+//计算到顶部的距离 ,滚动停止
+function scrollStop() {
+  // 判断此刻到顶部的距离是否和1秒前的距离相等
+  if (document.documentElement.scrollTop == topValue) {
+    console.log("滚动停止", document.documentElement.scrollTop, topValue)
+    clearInterval(interval);
+    interval = null;
+    // getCenterVideo();
+    // 获取最靠近中心的video元素，并且播放
+    calculateCenter();
+  }
+}
+
+
+function slideDownStep1(dist) {
+  var sd1 = document.getElementById("sd1"),
+    sd2 = document.getElementById("sd2");
+  sd2.style.display = "none";
+  sd1.style.display = "block";
+  sd1.style.height = 1 - parseInt(dist) + "px";
+}
+
+function slideDownStep2() {
+  var sd1 = document.getElementById("sd1"),
+    sd2 = document.getElementById("sd2");
+  sd1.style.display = "none";
+  sd1.style.height = "20px";
+  sd2.style.display = "block";
+}
+
+function slideDownStep3() {
+  var sd1 = document.getElementById("sd1"),
+    sd2 = document.getElementById("sd2");
+  sd1.style.display = "none";
+  sd2.style.display = "none";
+}
+
+function kt_touch(contentId, way) {
+  alert("hello")
+  var _start = 0,
+    _end = 0,
+    _content = document.getElementById(contentId);
+  _content.addEventListener("touchstart", touchStart, false);
+  _content.addEventListener("touchmove", touchMove, false);
+  _content.addEventListener("touchend", touchEnd, false);
+
+  function touchStart(event) {
+    event.preventDefault();
+    if (!event.touches.length) return;
+    var touch = event.touches[0];
+    if (way == "x") {
+      _start = touch.pageX;
+    } else {
+      _start = touch.pageY;
+    }
+  }
+
+  function touchMove(event) {
+    event.preventDefault();
+    if (!event.touches.length) return;
+    var touch = event.touches[0];
+
+    if (way == "x") {
+      _end = (_start - touch.pageX);
+    } else {
+      _end = (_start - touch.pageY);
+      if (_end < 0) {
+        slideDownStep1(_end);
+      }
+    }
+  }
+
+  function touchEnd(event) {
+    if (_end > 0) {
+      //左滑或上滑
+      slideDownStep2();
+      slideDownStep3();
+      // getReplyList(++curPage);
+    } else {
+      slideDownStep2();
+      slideDownStep3();
+      queryVideoList(-1);
+    } //右滑下滑
+  }
+}
+
+kt_touch('hot-container', 'y');
+
+
 $(function() {
+
+
 
   /*首次获取视频*/
   queryVideoList(-1);
 
+
   //滚动事件
   $(window).scroll(function() {
     console.log("滚轮滚动...");
-
     var scrollTop = $(this).scrollTop();
     var scrollHeight = $(document).height();
     var windowHeight = $(this).height();
@@ -147,18 +226,16 @@ $(function() {
     }
 
     if (interval == null) // 未发起时，启动定时器，1秒1执行
-      interval = setInterval(calculateTop, 1000);
+      interval = setInterval(scrollStop, 1000);
     topValue = document.documentElement.scrollTop;
 
   });
 
-
   //点击视频事件
   $("#hot-container").on("click", "video", function(e) {
-    // e.target.play();
-    console.log("e", e.target)
-    // var url = $(e.target).attr("src");
-    var url = $(e.target).attr("data-fullSrc");
+    console.log("click--video", e.target)
+    var url = $(e.target).attr("data-originalSrc");
+    e.target.pause();
     alert("即将跳转到:" + url + "");
     // window.location.href = url;
   });
@@ -219,7 +296,7 @@ $(function() {
         mescroll.endSuccess(); //无参
         res.map(item => {
           item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
-          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted autoplay loop x-webkit-airplay="true" webkit-playsinline="true" data-fullSrc="http://cloudtropy.com" src=' + item.videoSrc + ' poster=' + item.videoPoster + '></video><div class="video-controls"><img class="volume_icon" src="../assets/volume.svg" alt=""><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
+          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted autoplay loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc="http://cloudtropy.com" src=' + item.videoSrc + ' poster=' + item.videoPoster + '></video><div class="video-controls"><img class="volume_icon" src="../assets/volume.svg" alt=""><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
         });
       },
       error: () => {
@@ -235,7 +312,7 @@ $(function() {
       success: (res) => {
         res.map(item => {
           item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
-          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted autoplay loop x-webkit-airplay="true" webkit-playsinline="true" data-fullSrc="http://cloudtropy.com" src=' + item.videoSrc + ' poster=' + item.videoPoster + '></video><div class="video-controls"><img class="volume_icon" src="../assets/volume.svg" alt=""><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
+          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted autoplay loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc="http://cloudtropy.com" src=' + item.videoSrc + ' poster=' + item.videoPoster + '></video><div class="video-controls"><img class="volume_icon" src="../assets/volume.svg" alt=""><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
         });
         mescroll.endSuccess(); //无参
       },
@@ -330,3 +407,30 @@ $(function() {
   // window.onload = isTouchDevice();
 
 */
+
+/*
+   for (var i = 0; i < $("video.video").length; i++) {
+     // console.log("video-item", $("video.video")[i].getBoundingClientRect().top);
+     let rect = $("video.video")[i].getBoundingClientRect();
+     console.log("rect", rect, window.innerHeight, window.innerHeight * 0.5);
+     let top = $("video.video")[i].getBoundingClientRect().top;
+     let bottom = $("video.video")[i].getBoundingClientRect().bottom;
+     let innerHeight = window.innerHeight * 0.5;
+     // let innerHeight = window.innerHeight / 2 + 100;
+     // let minHeight = window.innerHeight / 2 + 100;
+     // console.log("top", "innerHeight", top, innerHeight);
+
+     if (rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth) {
+       $("video.video")[i].play();
+       console.log("video--top---", top, "bottom", bottom, "innerHeight", innerHeight, $("video.video")[i].offsetTop)
+     } else {
+       $("video.video")[i].pause();
+     }
+     // if (bottom > innerHeight && top < innerHeight) {
+     //   console.log("video--top---", top, "bottom", bottom, "innerHeight", innerHeight, $("video.video")[i].offsetTop)
+     //   $("video.video")[i].play();
+     // } else {
+     //   $("video.video")[i].pause();
+     // }
+   }
+   */

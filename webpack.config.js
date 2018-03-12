@@ -28,10 +28,10 @@ module.exports = {
     progress: true,
     proxy: {
       '/video': {
-        target: 'http://192.168.2.39:8000/'
+        target: 'http://192.168.1.197:8000/'
       },
       '/static': {
-        target: 'http://192.168.2.39:8000/'
+        target: 'http://192.168.1.197:8000/'
       },
     }
   },
