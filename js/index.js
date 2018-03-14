@@ -1,9 +1,7 @@
 import $ from "jquery";
 import moment from "moment";
-// import MeScroll from "mescroll.js"
-// import MiniRefreshTools from 'minirefresh';
-// import '../node_modules/minirefresh/dist/debug/minirefresh.css'
 moment.locale('zh-cn');
+import loading_gif from "../assets/loading.gif";
 
 var lastIndex;
 var topValue = 0;
@@ -16,25 +14,33 @@ function queryVideoList(last) {
     // url: "../mock.json",
     url: '/video/get_video_list?last=' + last,
     beforeSend: function() {
-      $('.ajax_loading').html('<img class="loading_gif" src="../assets/loading.gif" alt="">加载中...').show(); //显示加载时候的提示
+      $('.ajax_loading').html('<img class="loading_gif" src=' + loading_gif + ' alt="">加载中...').show(); //显示加载时候的提示
     },
     success: (res) => {
-      if (res.noMore) {
-        res.data.map(item => {
-          item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
-          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
-        });
-        $("video.video")[0].play();
-        $('.ajax_loading').text("没有更多数据了...");
+      if (res) {
+        if (res.noMore) {
+          res.data.map(item => {
+            item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
+            $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
+          });
+          $("video.video")[0].play();
+          $('.ajax_loading').text("没有更多数据了...");
+        } else {
+          $('.ajax_loading').hide() //请求成功,隐藏加载提示
+          res.data.map(item => {
+            item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
+            $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
+          });
+          $("video.video")[0].play();
+        }
+        res.data.length ? lastIndex = queryMinIndex(res.data) : null;
+        console.log("lastIndex", lastIndex)
       } else {
-        $('.ajax_loading').hide() //请求成功,隐藏加载提示
-        res.data.map(item => {
-          item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
-          $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
-        });
-        $("video.video")[0].play();
+        $('.ajax_loading').text("服务器开小差了...");
       }
-      res.data.length ? lastIndex = queryMinIndex(res.data) : null;
+    },
+    error: (err) => {
+      $('.ajax_loading').text("服务器开小差了...");
     }
   });
 }
@@ -42,7 +48,7 @@ function queryVideoList(last) {
 //获取最小列表的最新id
 function queryMinIndex(data) {
   data.sort(function(item1, item2) {
-    return item1.id > item2.id
+    return (+item1.id) > (+item2.id)
   });
   return data[0].id;
 }
@@ -83,7 +89,7 @@ function calculateCenter() {
       visibleArr.push($("video.video")[i]);
     }
   }
-  console.log("visibleArr", visibleArr);
+  console.log("visibleArr", visibleArr)
   if (visibleArr.length) {
     if (visibleArr.length == 1) {
       visibleArr[0].play();
@@ -94,11 +100,13 @@ function calculateCenter() {
         const innerHeight = window.innerHeight / 2;
         const distancefromCenter1 = Math.abs((position1.top + position1.height) - innerHeight);
         const distancefromCenter2 = Math.abs((position2.top + position2.height) - innerHeight);
-        console.log("position1", position1, position1.top + position1.height, "innerHeight", distancefromCenter1, Math.abs((position1.top + position1.height) - innerHeight));
-        console.log("position2", position2, position2.top + position2.height, "innerHeight", distancefromCenter2, Math.abs((position2.top + position2.height) - innerHeight));
+        // console.log("position1", position1, position1.top + position1.height, "innerHeight", distancefromCenter1, Math.abs((position1.top + position1.height) - innerHeight));
+        // console.log("position2", position2, position2.top + position2.height, "innerHeight", distancefromCenter2, Math.abs((position2.top + position2.height) - innerHeight));
         if (distancefromCenter1 < distancefromCenter2) {
+          console.log("ele1", ele1)
           ele1.play();
         } else if (distancefromCenter1 > distancefromCenter2) {
+          console.log("ele2", ele2)
           ele2.play();
         }
       });
@@ -106,26 +114,25 @@ function calculateCenter() {
   }
 }
 
-//计算到顶部的距离 ,滚动停止
+/*滚动停止（计算到顶部的距离）*/
 function scrollStop() {
-  // 判断此刻到顶部的距离是否和1秒前的距离相等
-  if (document.documentElement.scrollTop == topValue) {
+  if (document.documentElement.scrollTop == topValue) { // 判断此刻到顶部的距离是否和1秒前的距离相等
     console.log("滚动停止", document.documentElement.scrollTop, topValue)
     clearInterval(interval);
     interval = null;
     // getCenterVideo();
-    // 获取最靠近中心的video元素，并且播放
-    calculateCenter();
+    calculateCenter(); // 获取最靠近中心的video元素，并且播放
   }
 }
 
-
+/*下拉刷新步骤*/
 function slideDownStep1(dist) {
   var sd1 = document.getElementById("sd1"),
     sd2 = document.getElementById("sd2");
   sd2.style.display = "none";
   sd1.style.display = "block";
   sd1.style.height = 1 - parseInt(dist) + "px";
+  // sd1.style.height = 70 + 'px'
 }
 
 function slideDownStep2() {
@@ -143,14 +150,14 @@ function slideDownStep3() {
   sd2.style.display = "none";
 }
 
+/*touch监听函数*/
 function kt_touch(contentId, way) {
-  alert("hello")
   var _start = 0,
     _end = 0,
     _content = document.getElementById(contentId);
-  _content.addEventListener("touchstart", touchStart, false);
-  _content.addEventListener("touchmove", touchMove, false);
-  _content.addEventListener("touchend", touchEnd, false);
+  document.addEventListener("touchstart", touchStart, false);
+  document.addEventListener("touchmove", touchMove, false);
+  document.addEventListener("touchend", touchEnd, false);
 
   function touchStart(event) {
     event.preventDefault();
@@ -167,7 +174,6 @@ function kt_touch(contentId, way) {
     event.preventDefault();
     if (!event.touches.length) return;
     var touch = event.touches[0];
-
     if (way == "x") {
       _end = (_start - touch.pageX);
     } else {
@@ -179,56 +185,49 @@ function kt_touch(contentId, way) {
   }
 
   function touchEnd(event) {
-    if (_end > 0) {
-      //左滑或上滑
+    if (_end > 0) { //左滑或上滑
       slideDownStep2();
       slideDownStep3();
-      // getReplyList(++curPage);
-    } else {
+    } else { //右滑下滑
       slideDownStep2();
       slideDownStep3();
-      queryVideoList(-1);
-    } //右滑下滑
+      if ($(this).scrollTop() == 0) { //如果无滚动，下拉的时候清空数据 重新加载列表
+        $("#hot-container").empty();
+        queryVideoList(-1);
+      }
+    }
   }
 }
 
-kt_touch('hot-container', 'y');
-
 
 $(function() {
-
-
-
   /*首次获取视频*/
   queryVideoList(-1);
-
-
-  //滚动事件
+  /*监听touch事件*/
+  // kt_touch('hot-container', 'y');
+  /*滚动事件*/
   $(window).scroll(function() {
-    console.log("滚轮滚动...");
-    var scrollTop = $(this).scrollTop();
-    var scrollHeight = $(document).height();
-    var windowHeight = $(this).height();
-    console.log("document.documentElement.scrollTop ", topValue, scrollTop, scrollHeight, windowHeight)
-    if (scrollTop + windowHeight == scrollHeight) {
-      console.log("滑到底了");
+    // console.log("滚轮滚动...");
+    var scrollHeight = $(this).scrollTop(); //滚动高度
+    var contentHeight = $(document).height(); //内容高度
+    var windowHeight = $(this).height(); //可见高度
+    if (scrollHeight + windowHeight == contentHeight) { //console.log("滑到底了")
+      console.log("滑到底了------");
+      console.log("scrollHeight", scrollHeight, "contentHeight", contentHeight, "windowHeight", windowHeight);
       queryVideoList(lastIndex);
     }
 
-    if (topValue > scrollTop) {
-      console.log("向上滑动")
+    if (topValue > scrollHeight) { //console.log("向上滑动")
       scrollDirection = "top";
     }
 
-    if (topValue < scrollTop) {
-      console.log("向下滑动");
+    if (topValue < scrollHeight) { //console.log("向下滑动");
       scrollDirection = "bottom"
     }
 
     if (interval == null) // 未发起时，启动定时器，1秒1执行
       interval = setInterval(scrollStop, 1000);
     topValue = document.documentElement.scrollTop;
-
   });
 
   //点击视频事件
@@ -264,6 +263,7 @@ $(function() {
   });
 
 });
+
 
 
 /*
