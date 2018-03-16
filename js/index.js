@@ -156,7 +156,7 @@ $(function() {
 
     if (scrollHeight + windowHeight == contentHeight) { //console.log("滑到底了")
       console.log("滑到底了------", "topValue", topValue, "scrollHeight", scrollHeight);
-      !noMore ? $('.ajax_loading').html('<span id="loadMore">点击加载更多</span>').show() : null;
+      !noMore ? $('.ajax_loading').html('<a id="loadMore">点击加载更多</a>').show() : null;
       // queryVideoList(lastIndex);
     }
 
@@ -175,7 +175,8 @@ $(function() {
   });
 
   //点击加载更多
-  $('.ajax_loading').one("click", function() {
+  $('.ajax_loading').on("click", "#loadMore", function() {
+    $(this).attr("disabled", true);
     queryVideoList(lastIndex);
   });
 
