@@ -8,6 +8,7 @@ var lastIndex;
 var topValue = 0;
 var interval = null;
 var scrollDirection;
+var noMore;
 
 //获取视频
 function queryVideoList(last) {
@@ -19,16 +20,17 @@ function queryVideoList(last) {
     },
     success: (res) => {
       if (res) {
+        noMore = res.noMore;
         if (last == -1) {
           $("#hot-container").empty();
         }
-        if (res.noMore) {
+        if (res.noMore) { //noMore=true 代表无更多 noMore=false 代表还有更多
+          $('.ajax_loading').text("没有更多数据了...");
           res.data.map(item => {
             item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
             $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
           });
           $("video.video")[0].play();
-          $('.ajax_loading').text("没有更多数据了...");
         } else {
           $('.ajax_loading').hide() //请求成功,隐藏加载提示
           res.data.map(item => {
@@ -38,7 +40,6 @@ function queryVideoList(last) {
           $("video.video")[0].play();
         }
         res.data.length ? lastIndex = queryMinIndex(res.data) : null;
-        console.log("lastIndex", lastIndex)
       } else {
         $('.ajax_loading').text("啊哦，服务器开小差了...");
       }
@@ -48,6 +49,7 @@ function queryVideoList(last) {
     }
   });
 }
+
 
 //获取最小列表的最新id
 function queryMinIndex(data) {
@@ -129,9 +131,8 @@ function scrollStop() {
   }
 }
 
-
 $(function() {
-  /*首次获取视频*/
+  //首次加载视频
   queryVideoList(-1);
 
   //下拉刷新
@@ -146,16 +147,17 @@ $(function() {
     }
   });
 
-  /*滚动事件*/
+  //滚轮滚动
   $(window).scroll(function() {
     // console.log("滚轮滚动...");
     var scrollHeight = $(this).scrollTop(); //滚动高度
     var contentHeight = $(document).height(); //内容高度
     var windowHeight = $(this).height(); //可见高度
+
     if (scrollHeight + windowHeight == contentHeight) { //console.log("滑到底了")
-      console.log("滑到底了------");
-      console.log("scrollHeight", scrollHeight, "contentHeight", contentHeight, "windowHeight", windowHeight);
-      queryVideoList(lastIndex);
+      console.log("滑到底了------", "topValue", topValue, "scrollHeight", scrollHeight);
+      !noMore ? $('.ajax_loading').html('<span id="loadMore">点击加载更多</span>').show() : null;
+      // queryVideoList(lastIndex);
     }
 
     if (topValue > scrollHeight) { //console.log("向上滑动")
@@ -172,6 +174,11 @@ $(function() {
 
   });
 
+  //点击加载更多
+  $('.ajax_loading').one("click", function() {
+    queryVideoList(lastIndex);
+  });
+
   //点击视频事件
   $("#hot-container").on("click", "video", function(event) {
     event.preventDefault();
@@ -186,36 +193,35 @@ $(function() {
       "title": title,
       "user": user
     }));
-
-  });
-
-  //控制音量
-  $("#hot-container").on("click", "img.volume_icon", function(e) {
-    e.stopPropagation();
-    console.log("event", e.target, $(e.target).parent("div.video-controls").siblings("video")[0]);
-    const target = $(e.target).parent("div.video-controls").siblings("video")[0];
-    const muted = $(e.target).parent("div.video-controls").siblings("video")[0].muted;
-    if (target.muted) {
-      for (var i = 0; i < $("video.video").length; i++) {
-        $("video.video")[i].muted = true; //静音
-      }
-      target.muted = false;
-      console.log("target", target.src);
-      // $(target).attr("src", "../assets/volume.png")
-    } else {
-      // target.muted = true;
-      for (var i = 0; i < $("video.video").length; i++) {
-        $("video.video")[i].muted = true; //静音
-      }
-      console.log("target", target.src);
-      $(target).attr("src", "../assets/volume_no.svg")
-    }
   });
 
 });
 
 
 /*
+
+//控制音量
+$("#hot-container").on("click", "img.volume_icon", function(e) {
+  e.stopPropagation();
+  console.log("event", e.target, $(e.target).parent("div.video-controls").siblings("video")[0]);
+  const target = $(e.target).parent("div.video-controls").siblings("video")[0];
+  const muted = $(e.target).parent("div.video-controls").siblings("video")[0].muted;
+  if (target.muted) {
+    for (var i = 0; i < $("video.video").length; i++) {
+      $("video.video")[i].muted = true; //静音
+    }
+    target.muted = false;
+    console.log("target", target.src);
+    // $(target).attr("src", "../assets/volume.png")
+  } else {
+    // target.muted = true;
+    for (var i = 0; i < $("video.video").length; i++) {
+      $("video.video")[i].muted = true; //静音
+    }
+    console.log("target", target.src);
+    $(target).attr("src", "../assets/volume_no.svg")
+  }
+});
 
 function slideDownStep1(dist) {
   var sd1 = document.getElementById("sd1"),
