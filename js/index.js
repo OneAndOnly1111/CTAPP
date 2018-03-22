@@ -190,9 +190,9 @@ $(function() {
     event.target.pause();
     window.postMessage(JSON.stringify({
       "event": "playvideo",
-      "url": url,
-      "title": title,
-      "user": user
+      "videoOriginal": url,
+      "videoName": title,
+      "creater": user
     }));
   });
 
