@@ -41,9 +41,9 @@
     width: 100%;
     line-height: 0.6rem;
     text-align: center;
-    font-size: 0.14rem;
-    background: #DADADA;
-    color: #666;
+    font-size: 0.12rem;
+    background: #EFEFEF;
+    color:rgba(0, 0, 0, 0.3);
     display: none;
     /*position:fixed;*/
     /*bottom:0;*/
@@ -58,7 +58,7 @@
 }
 
 .hot-section {
-    margin-top: 0.15rem;
+    margin-top: 0.1rem;
     background: #fff;
     overflow: hidden;
 }
@@ -71,8 +71,9 @@
 
 .video-content>video {
     width: 100%;
-    height: 2.11rem;
-    object-fit: cover;
+    height: 2rem;
+    /*object-fit: cover;*/
+    object-fit: fill;
     /*fill 自动填充*/
 }
 
@@ -101,12 +102,13 @@
 
 .video-info {
     background: #fff;
-    padding: 0 0.1rem 0.1rem 0.1rem;
+    padding: 0.1rem 0.1rem 0.1rem 0.1rem;
 }
 
 .video-info .info-title {
     font-size: 0.15rem;
-    margin: 0.05rem 0;
+    /*margin: 0.05rem 0;*/
+    margin-bottom: 0.04rem;
     color: #333;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -119,27 +121,33 @@
 
 .video-info .info-other {
     font-size: 0.12rem;
-    color: #666;
+    color: #BBBBBB;
+    overflow: hidden;
     /*white-space: nowrap;*/
 }
 
-.video-info .info-name {
+.info-other .info-name {
     max-width: 1.05rem;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 0.05rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.video-info .info-playCounts {
+.info-other .right{
+    float: right;
     display: inline-block;
+}
+
+.right .info-playCounts {
     vertical-align: middle;
 }
 
-.video-info .info-publishTime {
-    float: right;
+.right .info-divider {
+    margin: 0 0.03rem;
+}
+.right .info-publishTime {
     vertical-align: middle;
 }
 
