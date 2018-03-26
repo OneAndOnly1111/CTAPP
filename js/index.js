@@ -28,14 +28,14 @@ function queryVideoList(last) {
           $('.ajax_loading').text("没有更多数据了...");
           res.data.map(item => {
             item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
-            $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="right"><span class="info-publishTime">' + item.publishTime + '</span><span class="info-divider">|</span><span class="info-playCounts">' + item.playCount + '次播放</span></span></p></div></section>')
+            $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-id=' + item.id + ' data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="right"><span class="info-publishTime">' + item.publishTime + '</span><span class="info-divider">|</span><span class="info-playCounts">' + item.playCount + '次播放</span></span></p></div></section>')
           });
           $("video.video")[0].play();
         } else {
           $('.ajax_loading').hide() //请求成功,隐藏加载提示
           res.data.map(item => {
             item.publishTime = moment(item.publishTime).startOf('hour').fromNow();
-            $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="right"><span class="info-publishTime">' + item.publishTime + '</span><span class="info-divider">|</span><span class="info-playCounts">' + item.playCount + '次播放</span></span></p></div></section>')
+            $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-id=' + item.id + ' data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="right"><span class="info-publishTime">' + item.publishTime + '</span><span class="info-divider">|</span><span class="info-playCounts">' + item.playCount + '次播放</span></span></p></div></section>')
             // $("#hot-container").append('<section class="hot-section"><div class="video-content"><video class="video" muted loop x-webkit-airplay="true" webkit-playsinline="true" data-originalSrc=' + item.videoOriginal + ' src=' + item.videoPreview + ' poster=' + item.videoPoster + '></video><div class="video-controls"><span class="controls-time">' + item.videoTime + '</span></div></div><div class="video-info"><p class="info-title">' + item.videoName + '</p><p class="info-other"><span class="info-name">' + item.creater + '</span><span class="info-playCounts">' + item.playCount + '次播放</span><span class="info-publishTime">' + item.publishTime + '</span></p></div></section>')
           });
           $("video.video")[0].play();
@@ -184,17 +184,22 @@ $(function() {
   //点击视频事件
   $("#hot-container").on("click", "video", function(event) {
     event.preventDefault();
+    var id = $(event.target).attr("data-id");
     var url = $(event.target).attr("data-originalSrc");
     var title = $(event.target).parent().siblings().find(".info-title").text();
     var user = $(event.target).parent().siblings().find(".info-name").text();
-    console.log("---postMessage---", "url", url, "title", title, "user", user);
     event.target.pause();
+    //增加一次播放次数
+    $.ajax({
+      url: `/video/add_play?id=${id}`,
+    });
     window.postMessage(JSON.stringify({
       "event": "playvideo",
       "videoOriginal": url,
       "videoName": title,
       "creater": user
     }));
+
   });
 
 });
